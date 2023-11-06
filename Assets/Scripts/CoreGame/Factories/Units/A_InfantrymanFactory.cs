@@ -8,11 +8,11 @@ public enum InfantryType
     SwordInfantryman
 };
 
-public abstract class A_InfantrymanFactory : T_PooledObjFactory<A_InfantrymanFactory, A_Infantryman>
+public abstract class A_InfantrymanFactory : A_UnitFactory//T_PooledObjFactory<A_InfantrymanFactory, A_Infantryman>
 {
     protected InfantryType m_infantryType = InfantryType.UnknownInfantryType;
     public List<A_Infantryman> m_allInfantrymans = new List<A_Infantryman>();
-    private A_Infantryman m_lastSelectedInfantry = null;
+    /*private A_Infantryman m_lastSelectedInfantry = null;
 
 
     // MonoBehaviour inherited "event methods" :
@@ -40,10 +40,10 @@ public abstract class A_InfantrymanFactory : T_PooledObjFactory<A_InfantrymanFac
     // example at minut25 of '8PoolingGestionMemoire' video from Atelier Unity GameCodeur "monstres"
     // (with abstract class for Card and inheritance..)
 
-    /*public static void RecycleInfantryman(Infantryman x_Infantryman)
+    *//*public static void RecycleInfantryman(Infantryman x_Infantryman)
     {
         _instance.m_InfantrymansPool.Recycle(x_Infantryman);
-    }*/
+    }*//*
     public virtual void RecycleInfantryman(A_Infantryman x_infantryman)
     {
         // both works : 
@@ -53,11 +53,11 @@ public abstract class A_InfantrymanFactory : T_PooledObjFactory<A_InfantrymanFac
     }
 
     // intended to work with m_allInfantrymans (new list) but never fully implemented/tested... :
-    /*public static void DeleteCard(Card x_card)
+    *//*public static void DeleteCard(Card x_card)
     {
         _instance.m_allCards.Remove(x_card);
         x_card.enabled = false;
-    }*/
+    }*//*
 
     public bool TrySelectInfantryAtPos(Vector3 x_pos)
     {
@@ -77,16 +77,16 @@ public abstract class A_InfantrymanFactory : T_PooledObjFactory<A_InfantrymanFac
     }
 
     // same as TrySelect, but don't change m_lastSelected...
-    public bool IsInfantryAtPos(Vector3 x_pos, out A_Man x_man)
+    public bool IsInfantryAtPos(Vector3 x_pos, out A_Unit x_unit)
     {
         bool ret = false;
-        x_man = null;
+        x_unit = null;
         foreach (A_Infantryman infantryman in m_allInfantrymans)
         {
             BoxCollider2D coll = infantryman.GetComponent<BoxCollider2D>();
             if (coll.OverlapPoint((Vector2)x_pos))
             {
-                x_man = infantryman;
+                x_unit = infantryman;
                 ret = true;
                 break;
             }
@@ -97,7 +97,7 @@ public abstract class A_InfantrymanFactory : T_PooledObjFactory<A_InfantrymanFac
     public A_Infantryman GetLastSelectedInfantry()
     {
         return m_lastSelectedInfantry;
-    }
+    }*/
 
     public InfantryType GetInfantryType()
     {

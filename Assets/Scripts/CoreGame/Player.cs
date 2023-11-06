@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private bool m_isPlaying = false;
     private uint m_goldAmount;
     private uint m_foodAmount;
-    private List<A_Man> m_ownedUnits = new();
+    private List<A_Unit> m_ownedUnits = new();
 
 
     void Start()
@@ -129,11 +129,11 @@ public class Player : MonoBehaviour
         return ret;
     }
 
-    public void AddOwnedUnit(A_Man x_newUnit)
+    public void AddOwnedUnit(A_Unit x_newUnit)
     {
         m_ownedUnits.Add(x_newUnit);
     }
-    public bool RemoveOwnedUnit(A_Man x_unitToRemove)
+    public bool RemoveOwnedUnit(A_Unit x_unitToRemove)
     {
         return m_ownedUnits.Remove(x_unitToRemove);
     }

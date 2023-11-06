@@ -27,8 +27,9 @@ public class GameMap : MonoBehaviour
     public uint m_forestReducedRange = 0; // (i) default value, can be overrided in Unity Editor
     public uint m_moutainReducedRange = 1; // (i) default value, can be overrided in Unity Editor
 
-    public PanelBuildingCreation m_buildingCreationPanel = null;
-    public PanelSelectedBuilding m_selectedBuildingPanel = null;
+    public ActivablePanel m_buildingCreationPanel = null;
+    public ActivablePanel m_selectedBuildingPanel = null;
+    public ActivablePanel m_selectedUnitPanel = null;
 
     private bool m_isMoveRangeSelectAreaActive = false;
 
@@ -285,18 +286,18 @@ public class GameMap : MonoBehaviour
     {
         bool ret = false;
         if (m_infantrymanFactory != null &&
-            m_infantrymanFactory.TrySelectInfantryAtPos(x_selectCellPos))
+            m_infantrymanFactory.TrySelectUnitAtPos(x_selectCellPos))
         {
             ret = true;
         }
         return ret;
     }
-    private bool IsUnitAtPos(Vector3 x_selectCellPos, out A_Man x_man)
+    private bool IsUnitAtPos(Vector3 x_selectCellPos, out A_Unit x_unit)
     {
         bool ret = false;
-        x_man = null;
+        x_unit = null;
         if (m_infantrymanFactory != null &&
-            m_infantrymanFactory.IsInfantryAtPos(x_selectCellPos, out x_man))
+            m_infantrymanFactory.IsUnitAtPos(x_selectCellPos, out x_unit))
         {
             ret = true;
         }
@@ -305,9 +306,9 @@ public class GameMap : MonoBehaviour
     private bool IsEnemyUnitAtPos(Vector3Int x_lCellPos)
     {
         bool ret = false;
-        if (IsUnitAtPos(GetCenteredCellPos(x_lCellPos), out A_Man man))
+        if (IsUnitAtPos(GetCenteredCellPos(x_lCellPos), out A_Unit unit))
         {
-            if (man.GetPlayerOwnerNb() != GameManager.GetPlayerNbCurrentlyPlaying())
+            if (unit.GetPlayerOwnerNb() != GameManager.GetPlayerNbCurrentlyPlaying())
             { // enemy unit
                 SetProperSelectCellOnMoveRangeArea(x_lCellPos);
                 ret = true;
@@ -420,7 +421,7 @@ public class GameMap : MonoBehaviour
 
     private void OnSelectedUnit(Vector3Int x_cellPos)
     {
-        A_Man selectedUnit = m_infantrymanFactory.GetLastSelectedInfantry();
+        A_Unit selectedUnit = m_infantrymanFactory.GetLastSelectedUnit();
         if (selectedUnit.GetPlayerOwnerNb() == GameManager.GetPlayerNbCurrentlyPlaying())
         {
             if (selectedUnit.WasCreatedThisTurn() ||
@@ -545,12 +546,12 @@ public class GameMap : MonoBehaviour
 
             // TO DO : add a "turn" limitation to avoid being able to move the same unit multiple times a turn
 
-            A_Infantryman selectedInfantry = m_infantrymanFactory.GetLastSelectedInfantry();
-            if (selectedInfantry.transform.position != x_centeredCellPos)
+            A_Unit selectedUnit = m_infantrymanFactory.GetLastSelectedUnit();
+            if (selectedUnit.transform.position != x_centeredCellPos)
             {
                 // move the selected unit to selected cell inside moveRange area
-                selectedInfantry.transform.position = x_centeredCellPos;
-                selectedInfantry.SetMovedThisTurn(true);
+                selectedUnit.transform.position = x_centeredCellPos;
+                selectedUnit.SetMovedThisTurn(true);
                 // ? : set a variable inside unit instance to remember that it already moved this turn ?
                 //Debug.Log("unit moved");
             }
@@ -590,7 +591,7 @@ public class GameMap : MonoBehaviour
             { // unwalkable
                 break; // don't allow to move on this cell and beyond
             }
-            /*else if (IsUnitAtPos(GetCenteredCellPos(x_lCellPos), out A_Man man))
+            /*else if (IsUnitAtPos(GetCenteredCellPos(x_lCellPos), out A_Unit man))
             {
                 if (man.GetPlayerOwnerNb() != GameManager.GetPlayerNbCurrentlyPlaying())
                 { // enemy unit
@@ -662,9 +663,9 @@ public class GameMap : MonoBehaviour
     {
         Tile properSelectCell = m_whiteSelectTile; // white is default
         Vector3 centeredCellPos = GetCenteredCellPos(x_lCellPos);
-        if (IsUnitAtPos(centeredCellPos, out A_Man man))
+        if (IsUnitAtPos(centeredCellPos, out A_Unit unit))
         {
-            if (man.GetPlayerOwnerNb() == GameManager.GetPlayerNbCurrentlyPlaying())
+            if (unit.GetPlayerOwnerNb() == GameManager.GetPlayerNbCurrentlyPlaying())
             { // friendly unit (relative to player currently playing)
                 properSelectCell = m_greenSelectTile;
             }

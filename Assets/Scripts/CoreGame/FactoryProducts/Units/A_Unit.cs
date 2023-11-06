@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class A_Man : A_MonoBehaviourPoolableObject
+public abstract class A_Unit : A_MonoBehaviourPoolableObject
 {
     private SpriteRenderer m_spriteRenderer;
     private BoxCollider2D m_boxCollider;

@@ -147,11 +147,11 @@ public class GameManager : T_Singleton<GameManager>
     public static void EndCurrentTurn()
     {
         // (i) in a 1st time, reset all turn-related variables of the current player
-        foreach (A_Man man in m_swordInfantrymanFactory.m_allInfantrymans)
+        foreach (A_Unit unit in m_swordInfantrymanFactory.m_allInfantrymans)
         {
-            // reset all turn-related variables of A_Man
-            man.SetMovedThisTurn(false);
-            man.SetCreatedThisTurn(false);
+            // reset all turn-related variables of A_Unit
+            unit.SetMovedThisTurn(false);
+            unit.SetCreatedThisTurn(false);
         }
         m_gameMap.DisableAllActivatedPanels();
         m_gameMap.DisableSingleSelectedCellArea();

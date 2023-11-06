@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class A_Infantryman : A_Man
+public abstract class A_Infantryman : A_Unit
 {
     protected const uint m_INFANTRY_HP = 6;
     protected const uint m_INFANTRY_ATK = 3;
@@ -41,7 +41,7 @@ public abstract class A_Infantryman : A_Man
     }
 
 
-    // A_Man inherited methods :
+    // A_Unit inherited methods :
     // ...
 
 

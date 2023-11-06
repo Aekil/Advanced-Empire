@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farmer : A_Man
+public class Farmer : A_Unit
 {
     private static uint m_FARMER_HP = 4;
     private static uint m_FARMER_ATK = 1;
@@ -41,7 +41,7 @@ public class Farmer : A_Man
     }
 
 
-    // A_Man inherited methods :
+    // A_Unit inherited methods :
     // ...
 
 

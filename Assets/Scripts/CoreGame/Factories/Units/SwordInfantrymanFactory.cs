@@ -64,8 +64,8 @@ public class SwordInfantrymanFactory : A_InfantrymanFactory
         return swordInf;
     }
 
-    public override void RecycleInfantryman(A_Infantryman x_infantryman)
+    /*public override void RecycleInfantryman(A_Infantryman x_infantryman)
     {
         base.RecycleInfantryman(x_infantryman);
-    }
+    }*/
 }
