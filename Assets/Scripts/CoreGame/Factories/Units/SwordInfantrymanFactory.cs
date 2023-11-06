@@ -49,7 +49,8 @@ public class SwordInfantrymanFactory : A_InfantrymanFactory
                     Debug.LogWarning(name + " : Unknown playerNb");
                     break;
             }
-            m_allInfantrymans.Add(swordInf);
+            //m_allInfantrymans.Add(swordInf);
+            m_allUnits.Add(swordInf);
         }
         else
         {

@@ -11,7 +11,7 @@ public enum InfantryType
 public abstract class A_InfantrymanFactory : A_UnitFactory//T_PooledObjFactory<A_InfantrymanFactory, A_Infantryman>
 {
     protected InfantryType m_infantryType = InfantryType.UnknownInfantryType;
-    public List<A_Infantryman> m_allInfantrymans = new List<A_Infantryman>();
+    //public List<A_Infantryman> m_allInfantrymans = new List<A_Infantryman>();
     /*private A_Infantryman m_lastSelectedInfantry = null;
 
 

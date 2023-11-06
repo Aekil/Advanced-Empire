@@ -147,7 +147,7 @@ public class GameManager : T_Singleton<GameManager>
     public static void EndCurrentTurn()
     {
         // (i) in a 1st time, reset all turn-related variables of the current player
-        foreach (A_Unit unit in m_swordInfantrymanFactory.m_allInfantrymans)
+        foreach (A_Unit unit in m_swordInfantrymanFactory.m_allUnits)//m_allInfantrymans)
         {
             // reset all turn-related variables of A_Unit
             unit.SetMovedThisTurn(false);
