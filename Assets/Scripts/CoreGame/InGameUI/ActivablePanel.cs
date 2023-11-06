@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PanelBuildingCreation : MonoBehaviour
+public class ActivablePanel : MonoBehaviour
 {
     private bool m_isActivated = false;
 
