@@ -54,14 +54,14 @@ public class PinchDetection : MonoBehaviour
                 m_touchControls.Touch.PrimaryFingerPos.ReadValue<Vector2>(),
                 m_touchControls.Touch.SecondaryFingerPos.ReadValue<Vector2>());
             // Detection
-            if (distance > previousDistance) // Zoom out
+            if (distance < previousDistance) // Zoom out
             {
                 if (m_camera.orthographicSize <= m_maxCamOrthoSize)
                 {
                     m_camera.orthographicSize += m_orthoZoomStep;
                 }
             }
-            else if (distance < previousDistance) // Zoom in
+            else if (distance > previousDistance) // Zoom in
             {
                 if (m_camera.orthographicSize >= m_minCamOrthoSize)
                 {
