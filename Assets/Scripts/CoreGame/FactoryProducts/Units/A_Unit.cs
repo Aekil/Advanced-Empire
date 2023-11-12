@@ -11,6 +11,8 @@ public abstract class A_Unit : A_MonoBehaviourPoolableObject
     protected bool m_movedThisTurn;
     protected bool m_createdThisTurn;
 
+    protected UnitType m_unitType;
+
     protected uint m_maxHP;
     protected uint m_currentHP;
     protected uint m_baseAttack;
@@ -30,6 +32,7 @@ public abstract class A_Unit : A_MonoBehaviourPoolableObject
         m_playerOwnerNb = PlayerNb.Unknown;
         m_movedThisTurn = false;
         m_createdThisTurn = true; // try with false
+        m_unitType = UnitType.Unknown;
         ManInit();
         return;
     }
@@ -76,6 +79,11 @@ public abstract class A_Unit : A_MonoBehaviourPoolableObject
 
 
     // Own methods :
+    public UnitType GetUnitType()
+    {
+        return m_unitType;
+    }
+
     protected virtual void ManInit()
     {
         m_maxHP = 0;

@@ -16,8 +16,7 @@ public class A_UnitFactory : T_PooledObjFactory<A_UnitFactory, A_Unit>
 {
     // TODO : implement this base class for all unit factories,
     // then modify current unit factories to inherit this class
-
-    protected UnitType m_unitType = UnitType.Unknown;
+    
     public List<A_Unit> m_allUnits = new List<A_Unit>();
     A_Unit m_lastSelectedUnit = null;
 
@@ -91,10 +90,5 @@ public class A_UnitFactory : T_PooledObjFactory<A_UnitFactory, A_Unit>
     public A_Unit GetLastSelectedUnit()
     {
         return m_lastSelectedUnit;
-    }
-
-    public UnitType GetUnitType()
-    {
-        return m_unitType;
     }
 }
