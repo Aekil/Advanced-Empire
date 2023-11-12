@@ -33,6 +33,7 @@ public class SwordInfantryman : A_Infantryman
     {
         InitSprite();
         SwordInfantrymanInit();
+        m_unitType = UnitType.Infantry;
     }
 
     protected override void Update()

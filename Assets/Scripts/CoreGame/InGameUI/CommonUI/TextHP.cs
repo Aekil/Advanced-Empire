@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TextBuildingHP : MonoBehaviour
+public class TextHP : MonoBehaviour
 {
-    public TextMeshProUGUI m_buildingHPTextMPUI;
+    public TextMeshProUGUI m_HPTextMPUI;
 
     private static uint m_maxHP = 0;
     private uint m_lastFrameMaxHP = 0;
@@ -15,13 +15,13 @@ public class TextBuildingHP : MonoBehaviour
 
     private void Start()
     {
-        if (m_buildingHPTextMPUI != null)
+        if (m_HPTextMPUI != null)
         {
-            UpdateBuildingHPText();
+            UpdateHPText();
         }
         else
         {
-            Debug.LogError(name + " : 'TextMeshProUGUI m_buildingHPTextMPUI' ref is null");
+            Debug.LogError(name + " : 'TextMeshProUGUI m_HPTextMPUI' ref is null");
         }
     }
 
@@ -30,7 +30,7 @@ public class TextBuildingHP : MonoBehaviour
         if (m_maxHP != m_lastFrameMaxHP ||
             m_currentHP != m_lastFrameCurrentHP)
         {
-            UpdateBuildingHPText();
+            UpdateHPText();
             m_lastFrameMaxHP = m_maxHP;
             m_lastFrameCurrentHP = m_currentHP;
         }
@@ -38,14 +38,14 @@ public class TextBuildingHP : MonoBehaviour
 
 
     // Own methods :
-    public static void SetBuildingHPToDisplay(uint x_currentHP, uint x_maxHP)
+    public static void SetHPToDisplay(uint x_currentHP, uint x_maxHP)
     {
         m_maxHP = x_maxHP;
         m_currentHP = x_currentHP;
     }
 
-    private void UpdateBuildingHPText()
+    private void UpdateHPText()
     {
-        m_buildingHPTextMPUI.text = "HP : " + m_currentHP + " / " + m_maxHP;
+        m_HPTextMPUI.text = "HP : " + m_currentHP + " / " + m_maxHP;
     }
 }

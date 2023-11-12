@@ -120,6 +120,15 @@ public abstract class A_Unit : A_MonoBehaviourPoolableObject
         m_createdThisTurn = x_createdThisTurn;
     }
 
+    public uint GetMaxHP()
+    {
+        return m_maxHP;
+    }
+    public uint GetCurrentHP()
+    {
+        return m_currentHP;
+    }
+
     public uint GetMoveRange()
     {
         return m_moveRange;

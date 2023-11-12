@@ -105,7 +105,7 @@ public class GameMap : MonoBehaviour
                         m_evSysGOTouched = false;
                     }
                     else
-                    {
+                    { // "Real map click"
                         Vector3 touchPos = Camera.main.ScreenToWorldPoint(m_touch.position);
                         Vector3Int cellPos = m_uGrid.WorldToCell(touchPos);
 
@@ -194,16 +194,36 @@ public class GameMap : MonoBehaviour
     private void CheckSelectedCell(Vector3Int x_cellPos)
     {
         Vector3 centeredCellPos = GetCenteredCellPos(x_cellPos);
-
-        if (m_isSingleSelectedCellAreaActive)
+        
+        
+        if (m_isSingleSelectedCellAreaActive ||
+            m_isMoveRangeSelectAreaActive)
         {
-            if (IsSingleCellAreaSelected(x_cellPos) == false)
+            if (m_isSingleSelectedCellAreaActive)
             {
-                DisableAllActivatedPanels();
-                DisableSingleSelectedCellArea();
+                if (IsSingleCellAreaSelected(x_cellPos) == false)
+                {
+                    DisableAllActivatedPanels();
+                    DisableSingleSelectedCellArea();
+                }
+            }
+            
+            if (m_isMoveRangeSelectAreaActive) // "MoveRange Selection Area" gameplay
+            {
+                Tile selectingTile;
+                if (IsMoveRangeAreaCellSelected(x_cellPos, out selectingTile))
+                {
+                    OnMoveRangeAreaCellSelected(centeredCellPos, selectingTile);
+                }
+                DisableMoveRangeSelectArea();
+                // manage case where both singleSelectedCellArea & moveRangeSelectAre are both active at same time
+                if (m_isSingleSelectedCellAreaActive)
+                {
+                    EnableSingleSelectedCellArea(m_singleSelectedCellPos); // re-enable properly
+                }
             }
         }
-        else if (m_isMoveRangeSelectAreaActive) // "MoveRange Selection Area" gameplay
+        /*else if (m_isMoveRangeSelectAreaActive) 
         {
             Tile selectingTile;
             if (IsMoveRangeAreaCellSelected(x_cellPos, out selectingTile))
@@ -211,7 +231,7 @@ public class GameMap : MonoBehaviour
                 OnMoveRangeAreaCellSelected(centeredCellPos, selectingTile);
             }
             DisableMoveRangeSelectArea();
-        }
+        }*/
         else
         { // "Classic Turn" gameplay
 
@@ -228,7 +248,7 @@ public class GameMap : MonoBehaviour
                 {
                     EnableSelectedBuildingPanel(x_cellPos);
                     TextBuildingTypeName.SetBuildingTypeToDisplay(selectedBuilding.GetBuildingType());
-                    TextBuildingHP.SetBuildingHPToDisplay(selectedBuilding.GetCurrentHP(), selectedBuilding.GetMaxHP());
+                    TextHP.SetHPToDisplay(selectedBuilding.GetCurrentHP(), selectedBuilding.GetMaxHP());
 
                     // temporary (while selectedBuildingPanel has the CreateUnit btn...) :
                     if (selectedBuilding.GetBuildingType() == BuildingType.Barracks)
@@ -424,6 +444,12 @@ public class GameMap : MonoBehaviour
         A_Unit selectedUnit = m_infantrymanFactory.GetLastSelectedUnit();
         if (selectedUnit.GetPlayerOwnerNb() == GameManager.GetPlayerNbCurrentlyPlaying())
         {
+            // /!\ "singleSelectedCellArea" + "moveRangeSelectArea" enabled at the same time may cause unexpected issues...
+            
+            EnableSelectedUnitPanel(x_cellPos);
+            TextUnitTypeName.SetUnitTypeToDisplay(selectedUnit.GetUnitType());
+            TextHP.SetHPToDisplay(selectedUnit.GetCurrentHP(), selectedUnit.GetMaxHP());
+
             if (selectedUnit.WasCreatedThisTurn() ||
                 selectedUnit.HasMovedThisTurn())
             {
@@ -454,6 +480,17 @@ public class GameMap : MonoBehaviour
         m_tilemaps[(int)TilemapIndex.SelectArea].gameObject.SetActive(false);
     }
 
+    private void EnableSelectedUnitPanel(Vector3Int x_cellPos)
+    {
+        m_selectedUnitPanel.Activate();
+        EnableSingleSelectedCellArea(x_cellPos);
+    }
+    public void DisableSelectedUnitPanel()
+    {
+        m_selectedUnitPanel.Deactivate();
+        DisableSingleSelectedCellArea();
+    }
+
     private void EnableBuildingCreationPanel(Vector3Int x_cellPos)
     {
         m_buildingCreationPanel.Activate();
@@ -478,6 +515,10 @@ public class GameMap : MonoBehaviour
 
     public void DisableAllActivatedPanels()
     {
+        if (m_selectedUnitPanel.IsActivated())
+        {
+            m_selectedUnitPanel.Deactivate();
+        }
         if (m_selectedBuildingPanel.IsActivated())
         {
             m_selectedBuildingPanel.Deactivate();

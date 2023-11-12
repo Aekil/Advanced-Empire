@@ -26,8 +26,8 @@ public class TextUnitTypeName : MonoBehaviour
     {
         if (m_unitTypeText != m_lastFrameText)
         {
-            m_lastFrameText = m_unitTypeText;
             m_unitTypeNameTextMPUI.text = m_unitTypeText;
+            m_lastFrameText = m_unitTypeText;
         }
     }
 
